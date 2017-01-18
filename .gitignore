@@ -1,1 +1,3 @@
 envDjangoapi*/**
+feiraslivressp/feiraslivressp/__pycache__/*
+feiraslivressp/feiraslivressp/djangoapi/__pycache__/*
