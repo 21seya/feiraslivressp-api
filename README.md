@@ -55,11 +55,11 @@ NOTA: Enquanto não apontarmos para outro banco de dados relacional, ele usará 
     $ python manage.py runserver
     ```
 
-Apêndice
+# Apêndice
 
 Testando com curl:
 
-# Retorna todas as feiras
+- Retorna todas as feiras
     $ curl -iX GET http://localhost:8000/feiraslivres/
     $ curl -X GET http://localhost:8000/feiraslivres/ | python -m json.tool # Mais apresentável
 
@@ -87,7 +87,7 @@ Testando com curl:
 ]
 ```
 
-# Cadastra uma nova feira
+- Cadastra uma nova feira
     $ curl -iX POST -H "Content-Type: application/json" -d '{"longi":"-46580164", "lat":"-23574733", "setcens":"355030885000000", "areap":"3550308004040", "coddist":"87", "distrito":"VILA FATIMA", "codsubpref":"26", "subprefe":"ARICANDUVA-FATIMA-CARRAO", "regiao5":"Leste", "regiao8":"Leste 1", "nome_feira":"VILA FATIMA", "registro":"4042-0", "logradouro":"RUA URUSSUI", "numero":"20", "bairro":"VL FATIMA", "referencia":"TV RUA PRETORIA"}' http://localhost:8000/feiraslivres/
 
 ```
@@ -102,7 +102,7 @@ X-Frame-Options: SAMEORIGIN
 {"id":3,"longi":"-46580164","lat":"-23574733","setcens":"355030885000000","areap":"3550308004040","coddist":87,"distrito":"VILA FATIMA","codsubpref":26,"subprefe":"ARICANDUVA-FATIMA-CARRAO","regiao5":"Leste","regiao8":"Leste 1","nome_feira":"VILA FATIMA","registro":"4042-0","logradouro":"RUA URUSSUI","numero":20,"bairro":"VL FATIMA","referencia":"TV RUA PRETORIA"}
 ```
 
-# Deleta uma feira à partir de sua Primary Key
+- Deleta uma feira à partir de sua Primary Key
     $ curl -iX DELETE http://localhost:8000/feiraslivres/3/
 
 ```
@@ -114,9 +114,22 @@ Vary: Accept, Cookie
 X-Frame-Options: SAMEORIGIN
 ```
 
-# Altera os campos cadastrados de uma feira, exceto a Primary Key
+- Altera os campos cadastrados de uma feira, exceto a Primary Key
+    $ curl -iX PUT -H "Content-Type: application/json" -d '{"nome_feira":"VILA CHAVES"}' http://localhost:8000/feiraslivres/1/
 
-# Busca de feiras utilizando um dos parâmetros (distrito,regiao5, nome_feira, bairro)
+```
+HTTP/1.0 200 OK
+Date: Thu, 19 Jan 2017 22:18:35 GMT
+Server: WSGIServer/0.2 CPython/3.6.0
+Content-Type: application/json
+Allow: OPTIONS, DELETE, PUT, POST, GET
+Vary: Accept, Cookie
+X-Frame-Options: SAMEORIGIN
+
+{"id":1,"longi":"-46580163","lat":"-23574722","setcens":"355030885000000","areap":"3550308004040","coddist":87,"distrito":"VILA FATIMA","codsubpref":26,"subprefe":"ARICANDUVA-FATIMA-CARRAO","regiao5":"Leste","regiao8":"Leste 1","nome_feira":"VILA CHAVES","registro":"4042-0","logradouro":"RUA URUSSUI","numero":20,"bairro":"VL FATIMA","referencia":"TV RUA PRETORIA"}
+```
+
+- Busca de feiras utilizando um dos parâmetros (distrito,regiao5, nome_feira, bairro)
 
 
 NOTA: Nos logs do Django server você verá algo assim:
@@ -134,7 +147,7 @@ NOTA: Nos logs do Django server você verá algo assim:
 
 - As urls utilizadas para GET no CURL também são acessíveis via Browser:
     ```
-    http://localhost:8000/feirazslivres/
+    http://localhost:8000/feiraslivres/
     http://localhost:8000/feiraslivres/2/
     ```
 

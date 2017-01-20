@@ -1,2 +1,15 @@
 envDjangoapi*/**
-feiraslivresapi/feiraslivres*/__pycache__/**
+*tmp*
+*.OLD*
+*.pyc
+*~
+*dump*
+*.log
+*.report
+__pycache__
+db.sqlite3
+db/
+htmlcov/
+log/
+.cache
+.coverage
