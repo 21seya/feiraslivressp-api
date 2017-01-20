@@ -1,4 +1,3 @@
-envDjangoapi*/**
 *tmp*
 *.OLD*
 *.pyc
