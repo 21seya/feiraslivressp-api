@@ -125,9 +125,9 @@ STATIC_URL = '/static/'
 REST_FRAMEWORK = {'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination', 'PAGE_SIZE': 5}
 
 
-# django_nose config
+# django_nose configuração
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = [
     '--with-coverage',
-    '--cover-package=feiraslivres'  # put all of the django app names you want to test here
+    '--cover-package=feiraslivres'  # Coloque todaos os nomes de aplicações Django que você deseja testar aqui.
 ]

@@ -15,23 +15,23 @@ logging.basicConfig(filename="import_data.log",
 
 
 if len(sys.argv) < 2:
-    print("Missing the csv filename parameter.")
+    print("Faltando o parâmetro de nome de arquivo csv.")
     sys.exit()
 
 if not os.path.exists(sys.argv[1]):
-    print("The file does not exist. Check for its full path.")
+    print("O arquivo não existe. Verifique seu caminho completo.")
     sys.exit()
 
 logging.info('-' * 80)
-logging.info('Beginning import of {}...'.format(sys.argv[1]))
+logging.info('Iniciando importação de {}...'.format(sys.argv[1]))
 
 headers = {'Content-Type': 'application/json'}
 
 success = 0
 errors = 0
 
-file = csv.DictReader(open(sys.argv[1]))  # opens the csv file as a Dict
-for row_number, row in enumerate(file):   # iterates the rows of the file in orders
+file = csv.DictReader(open(sys.argv[1]))  # Abre o arquivo CSV em um Dict
+for row_number, row in enumerate(file):   # Itera linha por linha do arquivo
     try:
         numero = row['NUMERO'].split('.')[0] if row['NUMERO'].strip() not in ['S/N', ''] else 0
 
@@ -47,6 +47,7 @@ for row_number, row in enumerate(file):   # iterates the rows of the file in ord
                  'numero': numero,
                  'bairro': row['BAIRRO'], 'referencia': row['REFERENCIA']}
 
+        # Realiza post dos dados da linha do arquivo usando a API
         res = requests.post('http://localhost:8000/feiras/',
                             data=json.dumps(feira),
                             headers=headers)
@@ -60,7 +61,7 @@ for row_number, row in enumerate(file):   # iterates the rows of the file in ord
         logging.exception(ex)
         continue
 
-logging.info('Import finished.')
-logging.info('The file has a total of {} records.'.format(success + errors))
-logging.info('{} records were successfully imported.'.format(success))
-logging.info('{} records were NOT successfully imported due to errors.'.format(errors))
+logging.info('Importação concluída')
+logging.info('O arquivo tem um total de {} registros.'.format(success + errors))
+logging.info('{} registros importados com sucesso.'.format(success))
+logging.info('{} registros que não foram importados com sucesso devido à erros.'.format(errors))

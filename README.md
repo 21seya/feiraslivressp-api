@@ -1,29 +1,29 @@
-## API using Python 3.5 and Django Rest Framework for basic CRUD of São Paulo's Free Fairs
+## API usando Python 3.5 e Django Rest Framework para CRUD básico de Feiras Livres de São Paulo
 
-1) Install the requirements that contain django and django rest framework from the project home directory
+1) Instale os requisitos que contêm django e django rest framework no diretório inicial do projeto
 
     ```
     $ pip install -r requirements.txt
     ```
 
-2) Test the application:
+2) Teste a aplicação
 
     ```
     $ python manage.py runserver
     ```
 
-- To import the CSV data, just in the root of the project execute the following command and this will make use of the API to insert the data in SQLite3
+- Para importar os dados do CSV, na raiz do projeto execute o seguinte comando e este irá fazer uso da API para inserir os dados no SQLite3
 
     ```
     $ python import_data.py DEINFO_AB_FEIRASLIVRES_2014.csv
     ```
 
-- The import log is in import_data.log
+- O Log de importação está em import_data.log
 
 
-# Testing with curl:
+# Testando com curl:
 
-- Return all fairs
+- Retorna todas as Feiras, também é possível realizar paginação com limit e offset
 
     ```
     $ curl -iX GET http://localhost:8000/feiras/
@@ -55,7 +55,7 @@
     ]
     ```
 
-- Create a new fair
+- Cadastra uma nova Feira
 
     ```
     $ curl -iX POST -H "Content-Type: application/json" -d '{"longi":"-46580164", "lat":"-23574733", "setcens":"355030885000000", "areap":"3550308004040", "coddist":"87", "distrito":"VILA FATIMA", "codsubpref":"26", "subprefe":"ARICANDUVA-FATIMA-CARRAO", "regiao5":"Leste", "regiao8":"Leste 1", "nome_feira":"VILA FATIMA", "registro":"4042-0", "logradouro":"RUA URUSSUI", "numero":"20", "bairro":"VL FATIMA", "referencia":"TV RUA PRETORIA"}' http://localhost:8000/feiras/
@@ -73,7 +73,7 @@
     {"id":3,"longi":"-46580164","lat":"-23574733","setcens":"355030885000000","areap":"3550308004040","coddist":87,"distrito":"VILA FATIMA","codsubpref":26,"subprefe":"ARICANDUVA-FATIMA-CARRAO","regiao5":"Leste","regiao8":"Leste 1","nome_feira":"VILA FATIMA","registro":"4042-0","logradouro":"RUA URUSSUI","numero":20,"bairro":"VL FATIMA","referencia":"TV RUA PRETORIA"}
     ```
 
-- Delete a fair using your Primary Key
+- Deleta uma Feira usando sua Primary Key
 
     ```
     $ curl -iX DELETE http://localhost:8000/feiras/3/
@@ -88,7 +88,7 @@
     X-Frame-Options: SAMEORIGIN
     ```
 
-- Change the registered fields of a fair, except the Primary Key
+- Altera os campos de uma feira já cadastrada, exceto a Primary Key
 
     ```
     $ curl -iX PUT -H "Content-Type: application/json" -d '{"nome_feira":"VILA CHAVES"}' http://localhost:8000/feiras/1/
@@ -106,7 +106,7 @@
     {"id":1,"longi":"-46580163","lat":"-23574722","setcens":"355030885000000","areap":"3550308004040","coddist":87,"distrito":"VILA FATIMA","codsubpref":26,"subprefe":"ARICANDUVA-FATIMA-CARRAO","regiao5":"Leste","regiao8":"Leste 1","nome_feira":"VILA CHAVES","registro":"4042-0","logradouro":"RUA URUSSUI","numero":20,"bairro":"VL FATIMA","referencia":"TV RUA PRETORIA"}
     ```
 
-- Search for fairs using any of the parameters (distrito,regiao5, nome_feira, bairro)
+- Procura por feiras usando qualquer um dos seguintes parâmetros (distrito, regiao5, nome_feira, bairro)
 
     ```
     $ curl -X GET http://localhost:8000/feiras/?distrito=otto | python -m json.tool
@@ -136,13 +136,13 @@
     ]
     ```
 
-NOTE: Because the application has no business logic and any complex behaviors, a structured text file log has not been applied. The application logs are in the terminal in DEBUG mode by default, so you'll see something like this:
+NOTA: Por razão da aplicação não possuir lógica de negócio e nenhum comportamento complexo, não foi aplicado um log estruturado em arquivo. Os logs da aplicação estão no terminal no modo DEBUG por padrão, então você verá algo assim
 
     [19/Jan/2017 12:20:48] "GET /feiraslivres/ HTTP/1.1" 200 374
-    ( Here, "200" is the HTTP STATUS CODE and "374" is the content length. )
+    ( Aqui, "200" é o HTTP STATUS CODE e "374" é o tamanho do conteúdo. )
 
 
-- The application supports the following content types, it is not necessary to send "Content-Type" request header:
+- A aplicação suporta os seguintes content types, e não é necessário enviar "Content-Type" no header da requisição:
 
     ```
     application/json
@@ -150,19 +150,18 @@ NOTE: Because the application has no business logic and any complex behaviors, a
     multipart/form-data
     ```
 
-- The urls used for GET in CURL are also accessible via Browser:
+- As urls usadas para GET no CURL são também acessíveis via Browser:
 
     ```
     http://localhost:8000/feiraslivres/
     http://localhost:8000/feiraslivres/2/
     ```
 
-# To observe coverage tests, run the following commands
+# Para observar a cobertura dos testes, rode os seguintes comandos
 
     ```
     $ cd feiraslivresapi
     $ python manage.py test -v 2 feiraslivres --with-coverage --cover-html
     ```
 
-NOTE: The coverage report will be on feiraslivressp-api/fairslivresapi/cover/index.html. By clicking on the report file you can see the coverage line by line.
-
+NOTA: A cobertura do relatório de testes pode ser acessada no arquivo feiraslivressp-api/fairslivresapi/cover/index.html. Ao clicar no arquivo do relatório, você pode visualizar a cobertura linha por linha.

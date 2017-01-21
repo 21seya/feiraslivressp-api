@@ -9,10 +9,10 @@ from .models import Feira
 from .serializers import FeiraSerializer
 
 '''
-For each model, there are 2 classes, that inherit from:
-    . ListCreateAPIView: GET / POST on a collection (list)
-    . RetrieveUpdateDestroyAPIView: GET / PUT / PATCH / DELETE on a single object (detail)
-In the end, there is the ApiRoot class, that is the entry endpoint for all the other models.
+Para cada modelo, há 2 classes, que herdam de:
+    . ListCreateAPIView: GET / POST em uma coleção de dados (list)
+    . RetrieveUpdateDestroyAPIView: GET / PUT / PATCH / DELETE em um único objeto (detail)
+No fim, há a classe ApiRoot, que é o endpoint de acesso para outros models.
 '''
 
 

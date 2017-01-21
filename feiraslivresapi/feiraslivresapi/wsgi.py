@@ -1,9 +1,9 @@
 """
-WSGI config for feiraslivresapi project.
+WSGI config para o projeto feiraslivresapi.
 
-It exposes the WSGI callable as a module-level variable named ``application``.
+Ele expõe o WSGI chamado como uma variável de nível de módulo nomeada ``application``.
 
-For more information on this file, see
+Para obter mais informações sobre este arquivo, consulte
 https://docs.djangoproject.com/en/1.10/howto/deployment/wsgi/
 """
 

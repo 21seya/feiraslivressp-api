@@ -1,5 +1,5 @@
 """
-The tests here were inspired by this:
+Os testes aqui foram inspirados pelo seguinte projeto:
 https://github.com/erkarl/django-rest-framework-oauth2-provider-example/blob/master/apps/users/tests.py
 """
 
@@ -167,15 +167,17 @@ class UpdateFeiraTest(APITestCase):
         )
 
         '''
-        I had to add this code below explicitly setting the serializer context because otherwise the serializer
-        will have problems when there is "url" listed on its Meta fields list.
-        The error pointed before explicitly setting the serializer context whas this:
+        Eu tive que adicionar o código abaixo setando o serializer em um
+        contexto explícito porque caso contrário o serializador terá problemas
+        quando houver listado a "url" em sua lista de campos Meta.
+        O erro apontado antes de definir explicitamente o contexto do serializador,
+        foi semelhante à este:
 
         AssertionError: `HyperlinkedIdentityField` requires the request in the serializer context.
         Add `context={'request': request}` when instantiating the serializer
 
-        This stackoverflow thread helped solve it:
-        http://stackoverflow.com/questions/34438290/assertionerror-hyperlinkedidentityfield-requires-the-request-in-the-serialize
+        Este thread stackoverflow ajudou a resolvê-lo:
+        Http://stackoverflow.com/questions/34438290/assertionerror-hyperlinkedidentityfield-requires-the-request-in-the-serialize
         '''
         factory = APIRequestFactory()
         request = factory.get('/')
@@ -183,12 +185,12 @@ class UpdateFeiraTest(APITestCase):
             'request': Request(request)
         }
 
-        # Serializer here outputs a dict
+        # Serializer aqui produz um dict
         self.feira1_data = FeiraSerializer(self.feira1, context=serializer_context).data
-        # Below we updated this dict setting the values we want to change (nome_feira)
+        # Abaixo nós atualizamos este dict definindo os valores que queremos mudar (nome_feira)
         self.feira1_data.update({'nome_feira': 'GENERICA SP 1 *** CHANGED'})
 
-        # Below it works exactly as the case of "self.feira1_data"
+        # Abaixo funciona exatamente como o caso de "self.feira1_data"
         self.feira2_data = FeiraSerializer(self.feira2, context=serializer_context).data
         self.feira2_data.update({'nome_feira': 'GENERICA SP 2 *** CHANGED'})
 
@@ -249,7 +251,7 @@ class DeleteUserTest(APITestCase):
         response2 = self.client.delete(reverse('feira-detail', args=[self.feira2.id]))
         self.assertEqual(response2.status_code, status.HTTP_204_NO_CONTENT)
 
-        # Since we removed both records, the database should be empty also
+        # Como removemos ambos os registros, o banco de dados deve estar vazio também
         feiras = Feira.objects.all()
         self.assertEqual(feiras.count(), 0)
 
