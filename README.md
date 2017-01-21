@@ -1,81 +1,33 @@
-## API utilizando Python 3.5 e Django rest framework para CRUD básico de Feiras Livres de São Paulo
+## API using Python 3.5 and Django Rest Framework for basic CRUD of São Paulo's Free Fairs
 
-1) Instale os requirements que contém django e djangorestframework à partir do diretório inicial do projeto
+1) Install the requirements that contain django and django rest framework from the project home directory
 
     ```
     $ pip install -r requirements.txt
     ```
 
-2) Crie um novo projeto em Django e em seguida uma nova aplicação
-
-    ```
-    $ django-admin.py startproject feiraslivresapi
-    $ cd feiraslivresapi
-    $ python manage.py startapp feiraslivres
-    ```
-
-2) Edite o arquivo feiraslivresapi/settings.py , adicionando a aplicação (feiraslivres.apps.FeiraslivresConfig) e o rest_framework
-
-    ```
-    INSTALLED_APPS = [
-        'django.contrib.admin',
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'django.contrib.sessions',
-        'django.contrib.messages',
-        'django.contrib.staticfiles',
-        'rest_framework',
-        'feiraslivres.apps.FeiraslivresConfig',
-    ]
-    ```
-
-3) Crie o models da sua aplicação (```/feiraslivresapi/feiraslivres/models.py```).
-
-4) Crie e execute as migrações
-
-    ```
-    $ python manage.py makemigrations feiraslivres
-    $ python manage.py migrate
-    ```
-
-NOTA: Enquanto não apontarmos para outro banco de dados relacional, ele usará sqlite3 por padrão. Assim, você pode usar o "sqlite3 CLI" para confirmar as tabelas criadas pós execução das migrações:
-
-    ```
-    $ sqlite3 db.sqlite3 '.tables'
-    $ sqlite3 db.sqlite3 '.schema feiraslivres_feira'
-    $ sqlite3 db.sqlite3 'SELECT * FROM feiraslivres_feira;'
-    ```
-
-5) Crie os serializers (```/feiraslivresapi/feiraslivres/serializers.py```)
-
-6) Crie as views da API (```feiraslivres/views.py```).
-
-7) Crie as rotas de url (```feiraslivres/urls.py``` e ```feiraslivresapi/urls.py```)
-
-8) Teste a aplicação:
+2) Test the application:
 
     ```
     $ python manage.py runserver
     ```
 
-- Para importar os dados do CSV, basta na raíz do projeto executar o seguinte comando e este fará uso da API para inserir os dados no SQLite3
+- To import the CSV data, just in the root of the project execute the following command and this will make use of the API to insert the data in SQLite3
 
     ```
     $ python import_data.py DEINFO_AB_FEIRASLIVRES_2014.csv
     ```
 
-- O log dessa importação está em import_data.log
+- The import log is in import_data.log
 
 
-# Apêndice
+# Testing with curl:
 
-Testando com curl:
-
-- Retorna todas as feiras
+- Return all fairs
 
     ```
     $ curl -iX GET http://localhost:8000/feiras/
-    $ curl -X GET http://localhost:8000/feiras/ | python -m json.tool # Mais apresentável
+    $ curl -X GET http://localhost:8000/feiras/ | python -m json.tool # pretty view
     $ curl -X GET http://localhost:8000/feiras/?limit=10&offset=10
     ```
 
@@ -103,7 +55,7 @@ Testando com curl:
     ]
     ```
 
-- Cadastra uma nova feira
+- Create a new fair
 
     ```
     $ curl -iX POST -H "Content-Type: application/json" -d '{"longi":"-46580164", "lat":"-23574733", "setcens":"355030885000000", "areap":"3550308004040", "coddist":"87", "distrito":"VILA FATIMA", "codsubpref":"26", "subprefe":"ARICANDUVA-FATIMA-CARRAO", "regiao5":"Leste", "regiao8":"Leste 1", "nome_feira":"VILA FATIMA", "registro":"4042-0", "logradouro":"RUA URUSSUI", "numero":"20", "bairro":"VL FATIMA", "referencia":"TV RUA PRETORIA"}' http://localhost:8000/feiras/
@@ -121,7 +73,7 @@ Testando com curl:
     {"id":3,"longi":"-46580164","lat":"-23574733","setcens":"355030885000000","areap":"3550308004040","coddist":87,"distrito":"VILA FATIMA","codsubpref":26,"subprefe":"ARICANDUVA-FATIMA-CARRAO","regiao5":"Leste","regiao8":"Leste 1","nome_feira":"VILA FATIMA","registro":"4042-0","logradouro":"RUA URUSSUI","numero":20,"bairro":"VL FATIMA","referencia":"TV RUA PRETORIA"}
     ```
 
-- Deleta uma feira à partir de sua Primary Key
+- Delete a fair using your Primary Key
 
     ```
     $ curl -iX DELETE http://localhost:8000/feiras/3/
@@ -136,7 +88,7 @@ Testando com curl:
     X-Frame-Options: SAMEORIGIN
     ```
 
-- Altera os campos cadastrados de uma feira, exceto a Primary Key
+- Change the registered fields of a fair, except the Primary Key
 
     ```
     $ curl -iX PUT -H "Content-Type: application/json" -d '{"nome_feira":"VILA CHAVES"}' http://localhost:8000/feiras/1/
@@ -154,7 +106,7 @@ Testando com curl:
     {"id":1,"longi":"-46580163","lat":"-23574722","setcens":"355030885000000","areap":"3550308004040","coddist":87,"distrito":"VILA FATIMA","codsubpref":26,"subprefe":"ARICANDUVA-FATIMA-CARRAO","regiao5":"Leste","regiao8":"Leste 1","nome_feira":"VILA CHAVES","registro":"4042-0","logradouro":"RUA URUSSUI","numero":20,"bairro":"VL FATIMA","referencia":"TV RUA PRETORIA"}
     ```
 
-- Busca de feiras podendo utilizar qualquer um dos parâmetros (distrito,regiao5, nome_feira, bairro)
+- Search for fairs using any of the parameters (distrito,regiao5, nome_feira, bairro)
 
     ```
     $ curl -X GET http://localhost:8000/feiras/?distrito=otto | python -m json.tool
@@ -184,37 +136,13 @@ Testando com curl:
     ]
     ```
 
-# Execute os testes com o seguinte comando na raiz do projeto
-
-    ```
-    $  pytest -s -vv feiraslivresapi/tests/
-    ```
-
-    ```
-    ================================================================= test session starts ==============================================================
-    platform linux -- Python 3.5.1, pytest-3.0.5, py-1.4.32, pluggy-0.4.0 -- /home/rshimithy/.pyenv/versions/3.5.1/envs/envFeiraslivres/bin/python
-    cachedir: .cache
-    rootdir: /home/rshimithy/Documents/feiraslivressp-api, inifile:
-    plugins: django-3.1.2, cov-2.4.0
-    collected 6 items
-
-    feiraslivresapi/tests/api/test_feiras.py::test_get_feira_from_api PASSED
-    feiraslivresapi/tests/api/test_feiras.py::test_post_feira_on_api PASSED
-    feiraslivresapi/tests/api/test_feiras.py::test_put_feira_on_api PASSED
-    feiraslivresapi/tests/api/test_feiras.py::test_patch_feira_on_api PASSED
-    feiraslivresapi/tests/api/test_feiras.py::test_delete_feira_on_api PASSED
-    feiraslivresapi/tests/unit/test_models.py::test_is_working PASSED
-
-    ============================================================= 6 passed in 0.56 seconds =============================================================
-    ```
-
-NOTA: Nos logs do Django server você verá algo assim:
+NOTE: Because the application has no business logic and any complex behaviors, a structured text file log has not been applied. The application logs are in the terminal in DEBUG mode by default, so you'll see something like this:
 
     [19/Jan/2017 12:20:48] "GET /feiraslivres/ HTTP/1.1" 200 374
-    ( Aqui, "200" é o HTTP STATUS CODE e "374" is the o tamanho do conteúdo. )
+    ( Here, "200" is the HTTP STATUS CODE and "374" is the content length. )
 
 
-- A aplicação suporta os seguintes content types, no qual deve ser enviado no request header "Content-Type":
+- The application supports the following content types, it is not necessary to send "Content-Type" request header:
 
     ```
     application/json
@@ -222,11 +150,19 @@ NOTA: Nos logs do Django server você verá algo assim:
     multipart/form-data
     ```
 
-- As urls utilizadas para GET no CURL também são acessíveis via Browser:
+- The urls used for GET in CURL are also accessible via Browser:
 
     ```
     http://localhost:8000/feiraslivres/
     http://localhost:8000/feiraslivres/2/
     ```
 
+# To observe coverage tests, run the following commands
+
+    ```
+    $ cd feiraslivresapi
+    $ python manage.py test -v 2 feiraslivres --with-coverage --cover-html
+    ```
+
+NOTE: The coverage report will be on feiraslivressp-api/fairslivresapi/cover/index.html. By clicking on the report file you can see the coverage line by line.
 

@@ -12,3 +12,4 @@ htmlcov/
 log/
 .cache
 .coverage
+.idea

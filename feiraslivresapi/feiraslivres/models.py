@@ -18,3 +18,6 @@ class Feira(models.Model):
     numero = models.CharField(max_length=15, blank=True, default='')
     bairro = models.CharField(max_length=40, blank=True, default='')
     referencia = models.CharField(max_length=40, blank=True, default='')
+
+    def __str__(self):
+        return 'nome: {}, bairro: {}'.format(self.nome_feira, self.bairro)
