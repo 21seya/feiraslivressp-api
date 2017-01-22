@@ -1,5 +1,7 @@
 ## API usando Python 3.5 e Django Rest Framework para CRUD básico de Feiras Livres de São Paulo
 
+É necessário a criação e ativação de uma VirtualEnv com Python 3.5, para isso recomendo pyenv.
+
 1) Instale os requisitos que contêm django e django rest framework no diretório inicial do projeto
 
     ```
