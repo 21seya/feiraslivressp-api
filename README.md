@@ -1,8 +1,9 @@
 ## API usando Python 3.5 e Django Rest Framework para CRUD básico de Feiras Livres de São Paulo
 
-É necessário a criação e ativação de uma VirtualEnv com Python 3.5, para isso recomendo pyenv.
+Antes de começar, é necessário a criação e ativação de uma VirtualEnv com Python 3.5, para isso recomendo pyenv.
+Após isso, vá para a pasta raiz desse projeto (feiraslivressp-api) e siga as instruções abaixo.
 
-1) Instale os requisitos que contêm django e django rest framework no diretório inicial do projeto
+1) Instale os requisitos do projeto
 
     ```
     $ pip install -r requirements.txt
@@ -11,11 +12,11 @@
 2) Faça a migração e suba a aplicação (para que possa importar os dados via API REST no próximo passo)
 
     ```
-    $ python manage.py migrate
-    $ python feiraslivresapi/manage.py runserver
+    $ python feiraslivresapi/manage.py migrate
+    $ python feiraslivresapi/manage.py runserver &
     ```
 
-3) Para importar os dados do CSV, na raiz do projeto execute o seguinte comando e este irá fazer uso da API para inserir os dados no SQLite3
+3) Para importar os dados do CSV, execute o seguinte comando e este irá fazer uso da API para inserir os dados no SQLite3
 
     ```
     $ python import_data.py DEINFO_AB_FEIRASLIVRES_2014.csv
