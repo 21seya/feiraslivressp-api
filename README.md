@@ -6,9 +6,10 @@
     $ pip install -r requirements.txt
     ```
 
-2) Suba a aplicação (para que possa importar os dados via API REST no próximo passo)
+2) Faça a migração e suba a aplicação (para que possa importar os dados via API REST no próximo passo)
 
     ```
+    $ python manage.py migrate
     $ python feiraslivresapi/manage.py runserver
     ```
 
