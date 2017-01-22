@@ -6,22 +6,25 @@
     $ pip install -r requirements.txt
     ```
 
-2) Teste a aplicação
+2) Suba a aplicação (para que possa importar os dados via API REST no próximo passo)
 
     ```
-    $ python manage.py runserver
+    $ python feiraslivresapi/manage.py runserver
     ```
 
-- Para importar os dados do CSV, na raiz do projeto execute o seguinte comando e este irá fazer uso da API para inserir os dados no SQLite3
+3) Para importar os dados do CSV, na raiz do projeto execute o seguinte comando e este irá fazer uso da API para inserir os dados no SQLite3
 
     ```
     $ python import_data.py DEINFO_AB_FEIRASLIVRES_2014.csv
     ```
 
-- O Log de importação está em import_data.log
+    NOTA: O Log de importação está em ```import_data.log```
 
 
 # Testando com curl:
+
+(NOTA: Uma alternativa ao curl é a UI Web para interagir com a API via browser, que é habilitada automaticamente pelo django-rest-framework. É possível fazer todas as requisições - GET, POST, PUT, PATCH e DELETE, acessando a seguinte URL: ``` http://localhost:8000/ ``` . Basta ir navegando pelos links dos recursos.)
+
 
 - Retorna todas as Feiras, também é possível realizar paginação com limit e offset
 
@@ -136,32 +139,22 @@
     ]
     ```
 
-NOTA: Por razão da aplicação não possuir lógica de negócio e nenhum comportamento complexo, não foi aplicado um log estruturado em arquivo. Os logs da aplicação estão no terminal no modo DEBUG por padrão, então você verá algo assim
-
-    [19/Jan/2017 12:20:48] "GET /feiraslivres/ HTTP/1.1" 200 374
-    ( Aqui, "200" é o HTTP STATUS CODE e "374" é o tamanho do conteúdo. )
+NOTA: A aplicação loga no arquivo feiraslivresapi/feiraslivresapi.log toda vez que um registro é CRIADO, ALTERADO ou EXCLUÍDO.
 
 
 - A aplicação suporta os seguintes content types, e não é necessário enviar "Content-Type" no header da requisição:
 
     ```
-    application/json
+    application/json (DEFAULT)
     application/x-www-form-urlencoded
     multipart/form-data
     ```
 
-- As urls usadas para GET no CURL são também acessíveis via Browser:
-
-    ```
-    http://localhost:8000/feiraslivres/
-    http://localhost:8000/feiraslivres/2/
-    ```
 
 # Para observar a cobertura dos testes, rode os seguintes comandos
 
     ```
-    $ cd feiraslivresapi
-    $ python manage.py test -v 2 feiraslivres --with-coverage --cover-html
+    $ python feiraslivresapi/manage.py test -v 2 feiraslivres --with-coverage --cover-html
     ```
 
-NOTA: A cobertura do relatório de testes pode ser acessada no arquivo feiraslivressp-api/fairslivresapi/cover/index.html. Ao clicar no arquivo do relatório, você pode visualizar a cobertura linha por linha.
+NOTA: A cobertura do relatório de testes pode ser acessada no arquivo ```feiraslivressp-api/fairslivresapi/cover/index.html```. Ao clicar em um arquivo do relatório, você pode visualizar a cobertura linha por linha.
