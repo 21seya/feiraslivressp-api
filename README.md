@@ -6,7 +6,7 @@ Após isso, vá para a pasta raiz desse projeto (feiraslivressp-api) e siga as i
 1) Instale os requisitos do projeto
 
     ```
-    $ pip install -r requirements.txt
+    $ pip install -r requeriments.txt
     ```
 
 2) Faça a migração e suba a aplicação (para que possa importar os dados via API REST no próximo passo)
